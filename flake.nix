@@ -28,7 +28,7 @@
         # ── Ana sistem config ──────────────────────────────
         ./configuration.nix
 
-        # ── Hyprland NixOS modülü (0.55+, Lua destekli) ───
+        # ── Hyprland NixOS modülü (0.54, hyprlang) ────────
         hyprland.nixosModules.default
 
         # ── Noctalia Shell ─────────────────────────────────

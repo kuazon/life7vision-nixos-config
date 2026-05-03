@@ -253,7 +253,6 @@
   # ──────────────────────────────────────────────────────────
   programs.dconf.enable   = true;
   programs.firefox.enable = true;
-  programs.git.enable     = true;
   programs.nix-ld.enable  = true;
   programs.gamemode.enable = true;
 
@@ -351,7 +350,7 @@
     taplo bash-language-server shellcheck shfmt
 
     # ── Nix Araçları ────────────────────────────────────────
-    nh nix-output-monitor nvd nix-tree cachix nix-search-cli
+    nh nix-output-monitor nvd nix-tree cachix nix-search-cli statix deadnix
 
     # ── Cloud & AI CLI ──────────────────────────────────────
     google-cloud-sdk rclone awscli2 s3cmd
