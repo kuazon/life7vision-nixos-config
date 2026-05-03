@@ -1,0 +1,18 @@
+# Donanıma özgü — makine başına farklı
+hardware-configuration.nix
+
+# Secrets — sops-nix kurulunca buraya ekleyeceğiz
+secrets/
+*.age
+
+# Nix build artifacts
+result
+result-*
+
+# Editor
+.direnv/
+.envrc
+
+# Backup dosyaları
+*.bak
+*.bak.*
