@@ -350,7 +350,7 @@
     taplo bash-language-server shellcheck shfmt
 
     # ── Nix Araçları ────────────────────────────────────────
-    nh nix-output-monitor nvd nix-tree cachix nix-search-cli statix deadnix
+    nh nix-output-monitor nvd nix-tree cachix nix-search-cli statix deadnix sops age
 
     # ── Cloud & AI CLI ──────────────────────────────────────
     google-cloud-sdk rclone awscli2 s3cmd

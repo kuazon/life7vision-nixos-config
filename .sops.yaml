@@ -1,0 +1,8 @@
+keys:
+  - &life7vision age1h7hx3vtg5c3xjhtf4gdflrznst83sp45aygr5j9vxhmr0x3m6p4s2u7ft9
+
+creation_rules:
+  - path_regex: secrets/.*\.yaml$
+    key_groups:
+      - age:
+          - *life7vision

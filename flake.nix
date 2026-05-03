@@ -18,9 +18,14 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, noctalia, hyprland, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, noctalia, hyprland, sops-nix, ... }: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
@@ -30,6 +35,9 @@
 
         # ── Hyprland NixOS modülü (0.54, hyprlang) ────────
         hyprland.nixosModules.default
+
+        # ── sops-nix secret management ────────────────────
+        sops-nix.nixosModules.sops
 
         # ── Noctalia Shell ─────────────────────────────────
         {
