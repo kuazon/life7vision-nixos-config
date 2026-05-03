@@ -6,25 +6,28 @@
 {
   home.username      = "life7vision";
   home.homeDirectory = "/home/life7vision";
-  home.stateVersion  = "25.11";   # system ile aynı olmalı
+  home.stateVersion  = "25.11";
 
   # ──────────────────────────────────────────────────────────
   # Kullanıcı Paketleri
-  # (system-wide olması gerekmeyen araçlar buraya)
   # ──────────────────────────────────────────────────────────
   home.packages = with pkgs; [
     # Nix araçları
-    nix-tree          # bağımlılık ağacı görselleştirici
-    nix-du            # nix store disk kullanımı
-    nvd               # iki nesil arası diff
+    nix-tree
+    nix-du
+    nvd
+
+    # nix-index + comma: bilinmeyen komutlarda "nix run nixpkgs#xxx?" önerisi
+    nix-index
+    comma
 
     # Python araçları (kullanıcı bazlı)
     python3Packages.ipython
     python3Packages.requests
 
     # Yardımcı araçlar
-    wtype             # wayland keyboard input simulator
-    wev               # wayland event viewer (keybind debug)
+    wtype
+    wev
     xdg-utils
   ];
 
@@ -32,29 +35,29 @@
   # Git
   # ──────────────────────────────────────────────────────────
   programs.git = {
-        enable = true;
-        package = pkgs.gitFull;
-        userName = "Ramazan Ermis";
-        userEmail = "life7vision@outlook.com";
-  
-        lfs.enable = true;
-        delta.enable = true;
-  
-        extraConfig = {
-          init.defaultBranch = "main";
-          pull.rebase = true;
-          rebase.autoStash = true;
-          fetch.prune = true;
-          push.autoSetupRemote = true;
-          core.editor = "code --wait";
-          core.autocrlf = "input";
-          core.fileMode = false;
-          credential.helper = "store";
-          merge.conflictStyle = "zdiff3";
-          rerere.enabled = true;
-          safe.directory = "/etc/nixos";
-        };
-      };
+    enable   = true;
+    package  = pkgs.gitFull;
+    userName = "Ramazan Ermis";
+    userEmail = "life7vision@outlook.com";
+
+    lfs.enable   = true;
+    delta.enable = true;
+
+    extraConfig = {
+      init.defaultBranch  = "main";
+      pull.rebase         = true;
+      rebase.autoStash    = true;
+      fetch.prune         = true;
+      push.autoSetupRemote = true;
+      core.editor         = "code --wait";
+      core.autocrlf       = "input";
+      core.fileMode       = false;
+      credential.helper   = "store";
+      merge.conflictStyle = "zdiff3";
+      rerere.enabled      = true;
+      safe.directory      = "/etc/nixos";
+    };
+  };
 
   # ──────────────────────────────────────────────────────────
   # Starship Prompt
@@ -71,12 +74,12 @@
         truncation_length = 3;
         style = "bold cyan";
       };
-      git_branch.symbol  = " ";
-      nix_shell.symbol   = "❄ ";
-      rust.symbol        = " ";
-      python.symbol      = " ";
-      golang.symbol      = " ";
-      nodejs.symbol      = " ";
+      git_branch.symbol = " ";
+      nix_shell.symbol  = "❄ ";
+      rust.symbol       = " ";
+      python.symbol     = " ";
+      golang.symbol     = " ";
+      nodejs.symbol     = " ";
     };
   };
 
@@ -84,7 +87,7 @@
   # Zoxide
   # ──────────────────────────────────────────────────────────
   programs.zoxide = {
-    enable            = true;
+    enable               = true;
     enableZshIntegration = true;
   };
 
@@ -110,9 +113,9 @@
   programs.bat = {
     enable = true;
     config = {
-      theme  = "Catppuccin-mocha";
-      style  = "numbers,changes,header";
-      pager  = "less -FR";
+      theme = "Catppuccin-mocha";
+      style = "numbers,changes,header";
+      pager = "less -FR";
     };
   };
 
@@ -120,24 +123,54 @@
   # Kitty Terminal
   # ──────────────────────────────────────────────────────────
   programs.kitty = {
-    enable   = true;
+    enable = true;
     font = {
       name = "JetBrainsMono Nerd Font";
       size = 13;
     };
     settings = {
-      scrollback_lines     = 10000;
-      enable_audio_bell    = false;
-      update_check_interval = 0;
+      scrollback_lines        = 10000;
+      enable_audio_bell       = false;
+      update_check_interval   = 0;
       confirm_os_window_close = 0;
-      # Catppuccin Mocha renk şeması
-      foreground           = "#cdd6f4";
-      background           = "#1e1e2e";
-      selection_foreground = "#1e1e2e";
-      selection_background = "#f5e0dc";
-      cursor               = "#f5e0dc";
-      cursor_text_color    = "#1e1e2e";
+      foreground              = "#cdd6f4";
+      background              = "#1e1e2e";
+      selection_foreground    = "#1e1e2e";
+      selection_background    = "#f5e0dc";
+      cursor                  = "#f5e0dc";
+      cursor_text_color       = "#1e1e2e";
     };
+  };
+
+  # ──────────────────────────────────────────────────────────
+  # GTK Teması — Catppuccin Mocha
+  # ──────────────────────────────────────────────────────────
+  gtk = {
+    enable = true;
+    theme = {
+      name    = "Catppuccin-Mocha-Standard-Blue-Dark";
+      package = pkgs.catppuccin-gtk;
+    };
+    iconTheme = {
+      name    = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+    cursorTheme = {
+      name    = "catppuccin-mocha-dark-cursors";
+      package = pkgs.catppuccin-cursors.mochaDark;
+      size    = 24;
+    };
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
+    gtk4.extraConfig.gtk-application-prefer-dark-theme = true;
+  };
+
+  # Wayland + X11 cursor
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    name       = "catppuccin-mocha-dark-cursors";
+    package    = pkgs.catppuccin-cursors.mochaDark;
+    size       = 24;
   };
 
   # ──────────────────────────────────────────────────────────
@@ -146,24 +179,24 @@
   xdg = {
     enable = true;
     userDirs = {
-      enable        = true;
+      enable            = true;
       createDirectories = true;
-      desktop       = "${config.home.homeDirectory}/Desktop";
-      documents     = "${config.home.homeDirectory}/Documents";
-      download      = "${config.home.homeDirectory}/Downloads";
-      music         = "${config.home.homeDirectory}/Music";
-      pictures      = "${config.home.homeDirectory}/Pictures";
-      videos        = "${config.home.homeDirectory}/Videos";
-      templates     = "${config.home.homeDirectory}/Templates";
-      publicShare   = "${config.home.homeDirectory}/Public";
+      desktop           = "${config.home.homeDirectory}/Desktop";
+      documents         = "${config.home.homeDirectory}/Documents";
+      download          = "${config.home.homeDirectory}/Downloads";
+      music             = "${config.home.homeDirectory}/Music";
+      pictures          = "${config.home.homeDirectory}/Pictures";
+      videos            = "${config.home.homeDirectory}/Videos";
+      templates         = "${config.home.homeDirectory}/Templates";
+      publicShare       = "${config.home.homeDirectory}/Public";
     };
     mimeApps = {
       enable = true;
       defaultApplications = {
-        "text/plain"       = "nvim.desktop";
-        "image/*"          = "imv.desktop";
-        "video/*"          = "mpv.desktop";
-        "application/pdf"  = "firefox.desktop";
+        "text/plain"      = "nvim.desktop";
+        "image/*"         = "imv.desktop";
+        "video/*"         = "mpv.desktop";
+        "application/pdf" = "firefox.desktop";
       };
     };
   };
@@ -178,10 +211,9 @@
   home.file.".npmrc".text = ''
     prefix=''${HOME}/.npm-global
   '';
-  # ~/.config/hypr/ tamamen senin kontrolünde kalır
-  # home-manager buraya müdahale etmez
-  # ──────────────────────────────────────────────────────────
 
+  # ──────────────────────────────────────────────────────────
   # Home-manager kendi kendini yönetsin
+  # ──────────────────────────────────────────────────────────
   programs.home-manager.enable = true;
 }
